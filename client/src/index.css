@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: theme("fontFamily.sans");
+  }
+
+  body {
+    @apply bg-background font-sans text-text-primary antialiased;
+  }
+
+  /* Headings use the Fraunces display serif */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  /* Numbers, IDs, prices, quantities, order numbers use IBM Plex Mono.
+     Apply with className="num" anywhere a numeric/data value is rendered. */
+  .num {
+    @apply font-mono tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Soft, layered elevation for cards — replaces flat single-border look. */
+  .card-elevated {
+    background-color: theme("colors.background.DEFAULT");
+    border: 1px solid theme("colors.border.DEFAULT");
+    border-radius: 12px;
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.04),
+      0 4px 12px rgba(15, 23, 42, 0.05);
+    transition:
+      transform 0.18s ease-in-out,
+      box-shadow 0.18s ease-in-out,
+      border-color 0.18s ease-in-out;
+  }
+
+  /* Hover lift for interactive cards/tiles. */
+  .card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 2px 4px rgba(15, 23, 42, 0.05),
+      0 12px 28px rgba(15, 23, 42, 0.1);
+  }
+
+  /* Snappy button press feedback. */
+  .btn-press {
+    transition:
+      transform 0.12s ease-in-out,
+      filter 0.15s ease-in-out,
+      background-color 0.15s ease-in-out;
+  }
+  .btn-press:hover {
+    filter: brightness(1.05);
+  }
+  .btn-press:active {
+    transform: scale(0.97);
+  }
+
+  /* Keyboard focus ring, consistent across tiles/cards/links. */
+  .focus-ring:focus-visible {
+    outline: 2px solid theme("colors.accent.DEFAULT");
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Scroll-reveal (used via <Reveal /> + useReveal). */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.4s ease-out,
+      transform 0.4s ease-out;
+    will-change: opacity, transform;
+  }
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* "Live" pulsing dot. */
+  .live-dot {
+    position: relative;
+  }
+  .live-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background-color: currentColor;
+    animation: live-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  @keyframes live-ping {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    75%,
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  /* Shimmer skeleton placeholder. */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      theme("colors.fill.subtle") 25%,
+      #e9eef5 37%,
+      theme("colors.fill.subtle") 63%
+    );
+    background-size: 400% 100%;
+    animation: skeleton-shimmer 1.4s ease infinite;
+  }
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0 50%;
+    }
+  }
+
+  /* Manifest rows streaming in from the top. */
+  .stream-in {
+    animation: stream-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes stream-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .live-dot::after,
+    .skeleton,
+    .stream-in {
+      animation: none;
+    }
+    .card-hover:hover,
+    .btn-press:active {
+      transform: none;
+    }
+  }
+}

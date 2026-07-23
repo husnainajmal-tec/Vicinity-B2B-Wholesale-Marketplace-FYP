@@ -1,0 +1,95 @@
+# ==========================================================================
+# Vicinity Trade — Git ignore
+# Keep secrets, dependencies, builds, and local junk out of GitHub.
+# ==========================================================================
+
+# ----- Dependencies -----
+node_modules/
+.pnp
+.pnp.js
+.yarn/
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# ----- Environment / secrets (NEVER commit real .env files) -----
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+serviceAccount*.json
+
+# ----- Build / output -----
+dist/
+build/
+out/
+.output/
+client/dist/
+server/dist/
+
+# ----- Vite / tooling caches -----
+.vite/
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
+.cache/
+.parcel-cache/
+.turbo/
+.npm/
+.yarn-integrity
+
+# ----- Logs -----
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ----- Uploads (local disk storage; keep folder via .gitkeep) -----
+server/uploads/*
+!server/uploads/.gitkeep
+
+# ----- Test / coverage -----
+coverage/
+.nyc_output/
+*.lcov
+
+# ----- OS junk -----
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ----- Editors / IDEs -----
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.sublime-project
+
+# ----- Optional local / agent clutter -----
+.cursor/
+*.local
+tmp/
+temp/
+.tmp/
+
+# ----- Misc -----
+*.bak
+*.tmp
+*.temp
+.wakatime-project
